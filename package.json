@@ -1,0 +1,20 @@
+{
+  "name": "dogfood-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "build": "rimraf build && mkdir -p build && cp src/*.js build"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=14"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "noble-ed25519": "^1.2.6"
+  },
+  "devDependencies": {
+    "rimraf": "^3.0.2"
+  }
+}
