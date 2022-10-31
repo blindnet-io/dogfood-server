@@ -11,9 +11,9 @@ const builder = TokenBuilder.init(appId, key)
 
 app.get('/token/user/:uid', (req, res) => {
   builder.user(req.params.uid).then(
-    token => res.send(JSON.stringify({
+    token => res.send({
       token
-    }))
+    })
   )
 })
 

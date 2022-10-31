@@ -1,24 +1,20 @@
 const { sign } = require('noble-ed25519')
 
-function str2B64Url(str) {
+function toBase64Url(arr) {
   function escape(str) {
     return str.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '')
   }
 
-  return escape(Buffer.from(str).toString('base64'))
-}
-
-function bin2B64Url(arr) {
-  return str2B64Url(Array.from(arr).map(val => String.fromCharCode(val)).join(''))
+  return escape(Buffer.from(arr).toString('base64'))
 }
 
 async function signToken(type, body, key) {
 
   const header = { 'alg': 'EdDSA', 'typ': type }
-  const hb = `${str2B64Url(JSON.stringify(header))}.${str2B64Url(JSON.stringify(body))}`
+  const hb = `${toBase64Url(JSON.stringify(header))}.${toBase64Url(JSON.stringify(body))}`
   const hb_bytes = new TextEncoder().encode(hb)
   const signature = await sign(hb_bytes, key)
-  const b64signature = bin2B64Url(signature)
+  const b64signature = toBase64Url(signature)
 
   return `${hb}.${b64signature}`
 }
