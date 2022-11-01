@@ -1,8 +1,10 @@
 
 const express = require('express')
+var cors = require('cors')
 const TokenBuilder = require('./TokenBuilder')
 
 const app = express()
+app.use(cors())
 
 const port = process.env.PORT
 const appId = process.env.APP_ID
