@@ -38,7 +38,7 @@ app.get('/token/user/:uid', (req, res) => {
   )
 })
 
-app.get('/token/user', (req, res) => {
+app.post('/token/user', (req, res) => {
   verify(req.body.access_token)
     .then(payload =>
       TokenBuilder.init(appId, key).user(payload['https://blindnet.io/email'])
