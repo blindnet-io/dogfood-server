@@ -3,7 +3,7 @@ const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const jose = require('jose')
-const TokenBuilder = require('./TokenBuilder')
+const TokenBuilder = require('@blindnet/jwt-node')
 
 const app = express()
 app.use(cors())

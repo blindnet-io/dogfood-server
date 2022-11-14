@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@blindnet/jwt-node@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@blindnet/jwt-node/-/jwt-node-0.1.0.tgz#713d712e6445a5bf9a4f420d017acbb6bd0f295a"
+  integrity sha512-kJKfFV1GWx7AsRBUm0r1J8KrF21dh8MfgbrKRH2RUy0KkejrnQodAxN/jrYPJnV5NDK/icPRUCPf8nk7PuNXNQ==
+  dependencies:
+    noble-ed25519 "^1.2.6"
+
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
