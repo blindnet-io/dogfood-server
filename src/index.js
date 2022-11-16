@@ -4,19 +4,17 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const jose = require('jose')
 const TokenBuilder = require('@blindnet/jwt-node')
+const env = require('./env');
+const processSubmission = require('./slack');
 
 const app = express()
 app.use(cors())
 app.use(bodyParser.json())
 
-function env(name) {
-  const throwErr = () => { throw Error(`Environment variable ${name} not set`) }
-  return process.env[name] || throwErr()
-}
-
 const port = env('PORT')
 const appId = env('APP_ID')
 const key = env('APP_KEY')
+const supabaseSecret = env('SUPABASE_SECRET')
 
 async function verify(jwt) {
   const JWKS = jose.createRemoteJWKSet(new URL(env('AUTH0_PK_URL')))
@@ -45,6 +43,15 @@ app.post('/token/user', (req, res) => {
     )
     .then(token => res.send({ token }))
     .catch(_ => res.status(401).send())
+})
+
+app.post('/supabase/webhook', (req, res) => {
+  if(req.header('Authorization') !== 'Bearer ' + supabaseSecret)
+    return res.sendStatus(403)
+
+  processSubmission(req.body.record).catch(console.error);
+
+  res.sendStatus(204)
 })
 
 app.listen(port, () => {
