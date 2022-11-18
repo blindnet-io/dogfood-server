@@ -15,6 +15,7 @@ const port = env('PORT')
 const appId = env('APP_ID')
 const key = env('APP_KEY')
 const supabaseSecret = env('SUPABASE_SECRET')
+const debug = process.env['DEBUG'] === 'yes';
 
 async function verify(jwt) {
   const JWKS = jose.createRemoteJWKSet(new URL(env('AUTH0_PK_URL')))
@@ -46,8 +47,12 @@ app.post('/token/user', (req, res) => {
 })
 
 app.post('/supabase/webhook', (req, res) => {
-  if(req.header('Authorization') !== 'Bearer ' + supabaseSecret)
+  if(req.header('Authorization') !== 'Bearer ' + supabaseSecret) {
+    if(debug) console.error('Got invalid Authorization header from Supabase')
     return res.sendStatus(403)
+  }
+
+  if(debug) console.log('Got Supabase webhook: ' + req.body)
 
   processSubmission(req.body.record).catch(console.error);
 
