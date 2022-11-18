@@ -9,7 +9,7 @@ const processSubmission = require('./slack');
 
 const app = express()
 app.use(cors())
-app.use(bodyParser.json())
+app.use(bodyParser.json({limit: '5mb'}))
 
 const port = env('PORT')
 const appId = env('APP_ID')
